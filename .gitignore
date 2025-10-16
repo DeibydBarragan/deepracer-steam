@@ -1,0 +1,14 @@
+# Ignore generated PDF files
+*.pdf
+*.PDF
+
+# Keep the gitignore file tracked
+!/.gitignore
+
+# Common Python / editor ignores (optional)
+__pycache__/
+*.py[cod]
+.env
+.venv/
+.vscode/
+.DS_Store
