@@ -29,15 +29,43 @@ def convert_md_to_pdf(md_path: str) -> None:
             content = f.read()
 
         cleaned = _strip_high_unicode(content)
+        
+        # Obtener el directorio del archivo .md para resolver rutas relativas de imágenes
+        md_dir = os.path.dirname(os.path.abspath(md_path))
+        
+        # Crear archivo temporal con header LaTeX para controlar posición de imágenes
+        header_tex = os.path.join(md_dir, ".pandoc_header_temp.tex")
+        with open(header_tex, "w", encoding="utf-8") as hf:
+            hf.write(r"""
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+""")
 
-        pypandoc.convert_text(
-            cleaned,
-            "pdf",
-            format="md",
-            outputfile=pdf_path,
-            extra_args=["--standalone", "--pdf-engine=xelatex"],
-        )
-        print(f"✅ Convertido: {pdf_path}")
+        try:
+            pypandoc.convert_text(
+                cleaned,
+                "pdf",
+                format="md",
+                outputfile=pdf_path,
+                extra_args=[
+                    "--standalone", 
+                    "--pdf-engine=xelatex",
+                    f"--resource-path={md_dir}",
+                    f"--include-in-header={header_tex}"
+                ],
+            )
+            print(f"✅ Convertido: {pdf_path}")
+        finally:
+            # Limpiar archivo temporal
+            if os.path.exists(header_tex):
+                os.remove(header_tex)
+                
     except Exception as e:
         print(f"❌ Error al convertir {md_path}: {e}")
 
