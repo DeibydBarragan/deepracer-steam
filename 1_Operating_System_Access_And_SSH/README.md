@@ -1,10 +1,10 @@
-Acceso al sistema operativo y habilitación del SSH
+# Acceso al sistema operativo y habilitación del SSH
 
-#Resumen
+## Resumen
 ------
 Pasos para acceder al sistema operativo (Ubuntu) del carro y habilitar SSH para acceso remoto.
 
-#Instrucciones
+## Instrucciones
 ------------
 
 1. Conexión física y encendido

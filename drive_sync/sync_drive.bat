@@ -20,7 +20,7 @@ set DRIVE_FOLDER_ID=15n3HbTbA0DiJlbOVLKdm9vE12lw_h27N
 echo ===============================================
 echo Sincronizando archivos locales con Google Drive...
 echo ===============================================
-%RCLONE_PATH% sync %LOCAL_PATH% "%REMOTE_NAME%:" --drive-root-folder-id %DRIVE_FOLDER_ID% --exclude ".git/**" --exclude "LICENSE" --exclude ".gitignore" --progress
+%RCLONE_PATH% sync %LOCAL_PATH% "%REMOTE_NAME%:" --drive-root-folder-id %DRIVE_FOLDER_ID% --exclude ".git/**" --exclude "LICENSE" --exclude ".gitignore" --exclude "drive_sync/**" --progress
 
 echo.
 echo ✅ Sincronización completada.
